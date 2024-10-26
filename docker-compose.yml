@@ -11,7 +11,6 @@ services:
     volumes:
       - ./src/app:/usr/src/app
     environment:
-      - OPENAI_API_KEY=${OPENAI_API_KEY}
       - CELERY_BROKER_URL=redis://redis:6379/0
       - CELERY_RESULT_BACKEND=redis://redis:6379/0
       - PYTHONPATH=/usr/src/app
@@ -27,7 +26,6 @@ services:
     volumes:
       - ./src/app:/usr/src/app
     environment:
-      - OPENAI_API_KEY=${OPENAI_API_KEY}
       - CELERY_BROKER_URL=redis://redis:6379/0
       - CELERY_RESULT_BACKEND=redis://redis:6379/0
     depends_on:
