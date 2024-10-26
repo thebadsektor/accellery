@@ -1,5 +1,7 @@
-from sqlalchemy import Column, String, Integer, Float, Boolean, JSON
-from sqlalchemy.orm import declarative_base
+from sqlalchemy import Column, String, Integer, Float, Boolean, JSON, Text, ForeignKey, DateTime
+from sqlalchemy.orm import relationship
+from sqlalchemy.ext.declarative import declarative_base
+from datetime import datetime
 
 Base = declarative_base()
 
@@ -77,3 +79,26 @@ class Summary(Base):
     content = Column(String)
     updatedAt = Column(String)
     createdAt = Column(String)
+
+class Document(Base):
+    __tablename__ = 'documents'
+
+    id = Column(Integer, primary_key=True, index=True)
+    title = Column(String, nullable=False)
+    created_at = Column(DateTime, default=datetime.utcnow)
+    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+
+    blocks = relationship("Block", back_populates="document", cascade="all, delete-orphan")
+
+class Block(Base):
+    __tablename__ = 'blocks'
+
+    id = Column(Integer, primary_key=True, index=True)
+    document_id = Column(Integer, ForeignKey('documents.id'))
+    type = Column(String, nullable=False)  # 'text', 'header', 'todo', etc.
+    content = Column(Text, nullable=True)
+    order = Column(Integer, nullable=False)
+    parent_id = Column(Integer, ForeignKey('blocks.id'), nullable=True)
+
+    document = relationship("Document", back_populates="blocks")
+    children = relationship("Block", backref="parent", remote_side=[id])

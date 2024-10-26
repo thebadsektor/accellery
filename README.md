@@ -12,7 +12,9 @@
     │       │   │   └── summaries.py
     │       │   └── v2/
     │       │       └── summaries.py
-    │       ├── databases/
+    │       ├── database/
+    │       │   ├── scaffold/
+    │       │   │   └── test.db
     │       │   └── database.py
     │       ├── documents/ #For testing celery job queue/
     │       │   └── document-1-357-1697.txt

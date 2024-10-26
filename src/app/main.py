@@ -15,51 +15,56 @@ from typing import List, Dict, Any
 import asyncio
 from openai import OpenAI
 from app.utils.v1 import utilities
+from app.api.v1 import documents
+from app.database.database import engine, Base
 
 load_dotenv()
 
 api_key=os.environ.get("OPENAI_API_KEY")
 
-tags_metadata = [
-    {
-        "name": "General Tasks",
-        "description": "Operations with items. Manage items, search, and more.",
-        "externalDocs": {
-            "description": "Items external docs",
-            "url": "https://example.com/items-docs",
-        },
-    },
-    {
-        "name": "Summaries",
-        "description": "Operations with items. Manage items, search, and more.",
-        "externalDocs": {
-            "description": "Items external docs",
-            "url": "https://example.com/items-docs",
-        },
-    },
-    {
-        "name": "Summaries v2",
-        "description": "Operations with items. Manage items, search, and more.",
-        "externalDocs": {
-            "description": "Items external docs",
-            "url": "https://example.com/items-docs",
-        },
-    },
-    {
-        "name": "Utilities",
-        "description": "Operations with items. Manage items, search, and more.",
-        "externalDocs": {
-            "description": "Items external docs",
-            "url": "https://example.com/items-docs",
-        },
-    }
-]
+# tags_metadata = [
+#     {
+#         "name": "General Tasks",
+#         "description": "Operations with items. Manage items, search, and more.",
+#         "externalDocs": {
+#             "description": "Items external docs",
+#             "url": "https://example.com/items-docs",
+#         },
+#     },
+#     {
+#         "name": "Summaries",
+#         "description": "Operations with items. Manage items, search, and more.",
+#         "externalDocs": {
+#             "description": "Items external docs",
+#             "url": "https://example.com/items-docs",
+#         },
+#     },
+#     {
+#         "name": "Summaries v2",
+#         "description": "Operations with items. Manage items, search, and more.",
+#         "externalDocs": {
+#             "description": "Items external docs",
+#             "url": "https://example.com/items-docs",
+#         },
+#     },
+#     {
+#         "name": "Utilities",
+#         "description": "Operations with items. Manage items, search, and more.",
+#         "externalDocs": {
+#             "description": "Items external docs",
+#             "url": "https://example.com/items-docs",
+#         },
+#     }
+# ]
 
 # Define the FastAPI app
-app = FastAPI(openapi_tags=tags_metadata,
+app = FastAPI(#openapi_tags=tags_metadata,
               title='Knowledge Research Inc. API',
               description='Knowledge Research Inc.'
               )
+
+# Create database tables
+Base.metadata.create_all(bind=engine)
 
 # Configure CORS
 
@@ -78,11 +83,11 @@ app.add_middleware(
 )
 
 # app.include_router(products.router)
-app.include_router(general_tasks.router, prefix="/api/v1/tasks")
-app.include_router(summaries_v1.router, prefix="/api/v1/summaries")
-app.include_router(summaries_v2.router, prefix="/api/v2/summaries")
+# app.include_router(general_tasks.router, prefix="/api/v1/tasks")
+# app.include_router(summaries_v1.router, prefix="/api/v1/summaries")
+# app.include_router(summaries_v2.router, prefix="/api/v2/summaries")
 app.include_router(utilities.router, prefix="/api/v1/utilities")
-
+app.include_router(documents.router, prefix="/api/v1")
 
 # @app.get("/heartbeat", tags=["Utilities"])
 # async def heartbeat():
