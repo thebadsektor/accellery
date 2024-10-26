@@ -1,12 +1,16 @@
+import os
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, declarative_base
-from sqlalchemy import create_engine
 from databases import Database
 
-# Configure the database URL
-DATABASE_URL = "sqlite:///./test.db"
-Base = declarative_base()
+# Create the directory if it doesn't exist
+db_dir = os.path.join(os.path.dirname(__file__), "scaffold")
+os.makedirs(db_dir, exist_ok=True)
 
+# Configure the new database URL
+DATABASE_URL = f"sqlite:///{db_dir}/test.db"
+
+Base = declarative_base()
 
 # Create the database engine and connect to it
 engine = create_engine(DATABASE_URL)
