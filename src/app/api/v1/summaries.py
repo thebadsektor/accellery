@@ -6,15 +6,15 @@ from fastapi import APIRouter, HTTPException
 from fastapi.responses import JSONResponse
 from openai import OpenAI
 
-from models.models import Sumdoc
-from schemas.schemas import SumdocSchema
-from models.models import Summary
-from schemas.schemas import SummarySchema
+from app.models.models import Sumdoc
+from app.schemas.schemas import SumdocSchema
+from app.models.models import Summary
+from app.schemas.schemas import SummarySchema
 
-from database.database import database
+from app.database.database import database
 from fastapi.encoders import jsonable_encoder
 
-from worker import summarize_task, create_summary_task
+from app.worker import summarize_task, create_summary_task
 
 router = APIRouter()
 

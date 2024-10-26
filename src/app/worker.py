@@ -1,8 +1,8 @@
 import asyncio, os, time, uuid
-from services.v1.summary_services import summarize, create_summarization
+from app.services.v1.summary_services import summarize, create_summarization
 from datetime import datetime
-from models.models import Summary
-from database.database import database
+from app.models.models import Summary
+from app.database.database import database
 
 from celery import Celery
 

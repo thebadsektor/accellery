@@ -6,7 +6,7 @@ from fastapi.templating import Jinja2Templates
 from openai import OpenAI
 from fastapi.middleware.cors import CORSMiddleware
 import os
-from worker import create_task, summarize_task
+from app.worker import create_task, summarize_task
 
 router = APIRouter()
 

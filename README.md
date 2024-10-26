@@ -35,11 +35,11 @@
     │       │   └── openai.py
     │       ├── Dockerfile
     │       ├── main.py
-    │       ├── requirements.txt
     │       ├── test.db
     │       └── worker.py
     ├── .env
     ├── .gitignore
     ├── docker-compose.yml
-    └── READEME.md
+    ├── READEME.md
+    └── requirements.txt
 ```
