@@ -1,7 +1,7 @@
 # create_tables.py
 
-from app.models.models import Base, Document, Block
-from app.database.database import engine
+from models.models import Base, Document, Block
+from database.database import engine
 from sqlalchemy import inspect
 
 def create_all_tables():

@@ -8,15 +8,15 @@ from pydantic import BaseModel
 import os
 from dotenv import load_dotenv
 # from .routes import products
-from app.api.v1 import summaries as summaries_v1
-from app.api.v2 import summaries as summaries_v2
-from app.api.v1 import general_tasks
+from api.v1 import summaries as summaries_v1
+from api.v2 import summaries as summaries_v2
+from api.v1 import general_tasks
 from typing import List, Dict, Any
 import asyncio
 from openai import OpenAI
-from app.utils.v1 import utilities
-from app.api.v1 import documents
-from app.database.database import engine, Base
+from utils.v1 import utilities
+from api.v1 import documents
+from database.database import engine, Base
 
 load_dotenv()
 

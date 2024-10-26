@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException
-from app.models.models import Product
-from app.schemas.schemas import ProductSchema
-from app.database.database import database
+from models.models import Product
+from schemas.schemas import ProductSchema
+from database.database import database
 from typing import List
 import uuid
 from app.routes.summaries import summarize, prompt_template

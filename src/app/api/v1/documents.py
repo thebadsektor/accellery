@@ -1,10 +1,12 @@
 from fastapi import APIRouter, Depends, HTTPException, status, WebSocket, WebSocketDisconnect
 from sqlalchemy.orm import Session
-from app.models.models import Document, Block
-from app.schemas.schemas import Document as DocumentSchema, DocumentCreate
-from app.schemas.schemas import Block as BlockSchema, BlockCreate
-from app.database.database import get_db
-from app.utils.websocket import ConnectionManager
+from models.models import Document, Block
+from schemas.schemas import Document as DocumentSchema, DocumentCreate
+from schemas.schemas import Block as BlockSchema, BlockCreate
+from database.database import get_db
+from utils.websocket import ConnectionManager
+from schemas.schemas import DocumentUpdate  # Ensure this is defined
+from schemas.schemas import BlockUpdate  # Ensure this is defined
 
 router = APIRouter(tags=["Documents & Blocks"])
 manager = ConnectionManager()
@@ -50,7 +52,6 @@ def create_block(document_id: int, block: BlockCreate, db: Session = Depends(get
     db.refresh(db_block)
     return db_block
 
-from app.schemas.schemas import DocumentUpdate  # Ensure this is defined
 
 @router.put("/documents/{document_id}", response_model=DocumentSchema)
 def update_document(document_id: int, document: DocumentUpdate, db: Session = Depends(get_db)):
@@ -75,7 +76,7 @@ def delete_document(document_id: int, db: Session = Depends(get_db)):
     db.commit()
     return {"message": "Document deleted successfully"}
 
-from app.schemas.schemas import BlockUpdate  # Ensure this is defined
+
 
 @router.put("/documents/{document_id}/blocks/{block_id}", response_model=BlockSchema)
 def update_block(document_id: int, block_id: int, block: BlockUpdate, db: Session = Depends(get_db)):

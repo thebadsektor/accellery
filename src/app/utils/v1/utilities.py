@@ -4,7 +4,7 @@ import asyncio
 from fastapi import APIRouter, HTTPException
 import os
 router = APIRouter()
-from app.database.database import Base, engine
+from database.database import Base, engine
 
 api_key=os.environ.get("OPENAI_API_KEY")
 
