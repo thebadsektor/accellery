@@ -1,7 +1,10 @@
 from sqlalchemy import Column, String, Integer, ForeignKey, DateTime, Text
 from sqlalchemy.orm import relationship
+from sqlalchemy.ext.declarative import declarative_base
 from database.database import Base
 from datetime import datetime
+
+Base = declarative_base()
 
 # Sample Model
 # class Product(Base):
@@ -55,7 +58,7 @@ class Block(Base):
     type = Column(String, nullable=False)
     content = Column(Text, nullable=True)
     order = Column(Integer, nullable=False)
-    parent_id = Column(Integer, ForeignKey('blocks.id'), nullable=True)
+    parent_id = Column(Integer, ForeignKey('blocks.id'), nullable=True)  # Allowing parent_id to be nullable
 
     document = relationship("Document", back_populates="blocks")
     children = relationship("Block", backref="parent", remote_side=[id])

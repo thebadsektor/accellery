@@ -47,3 +47,15 @@
 ├── READEME.md
 └── requirements.txt
 ```
+
+Access pgAdmin
+1. Open your web browser and go to http://localhost:5050.
+2. Log in using:
+    - Email: admin@admin.com
+    - Password: admin
+    - Add a new server:
+    - Name: PostgreSQL (or any name you prefer)
+    - Host: db
+    - Port: 5432
+    - Username: postgres
+    - Password: postgres

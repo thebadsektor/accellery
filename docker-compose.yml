@@ -12,9 +12,9 @@ services:
       - ./src/app:/usr/src/app
     environment:
       - OPENAI_API_KEY=${OPENAI_API_KEY}
-      - DATABASE_URL=postgresql://postgres:postgres@db:5432/postgres
       - CELERY_BROKER_URL=redis://redis:6379/0
       - CELERY_RESULT_BACKEND=redis://redis:6379/0
+      - PYTHONPATH=/usr/src/app
     depends_on:
       - db
       - redis
@@ -28,7 +28,6 @@ services:
       - ./src/app:/usr/src/app
     environment:
       - OPENAI_API_KEY=${OPENAI_API_KEY}
-      - DATABASE_URL=postgresql://postgres:postgres@db:5432/postgres
       - CELERY_BROKER_URL=redis://redis:6379/0
       - CELERY_RESULT_BACKEND=redis://redis:6379/0
     depends_on:
@@ -37,14 +36,14 @@ services:
 
   db:
     image: postgres:15
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: postgres
+      POSTGRES_DB: accellery_db
     ports:
       - 5432:5432
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
 
   redis:
     image: redis:7
@@ -60,9 +59,19 @@ services:
       - CELERY_BROKER_URL=redis://redis:6379/0
       - CELERY_RESULT_BACKEND=redis://redis:6379/0
     depends_on:
-      - db
+      - web
       - redis
       - worker
+
+  pgadmin:
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    ports:
+      - 5050:80
+    depends_on:
+      - db
 
 volumes:
   postgres_data:
