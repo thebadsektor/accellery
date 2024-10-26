@@ -8,9 +8,6 @@ from pydantic import BaseModel
 import os
 from dotenv import load_dotenv
 # from .routes import products
-from api.v1 import summaries as summaries_v1
-from api.v2 import summaries as summaries_v2
-from api.v1 import general_tasks
 from typing import List, Dict, Any
 import asyncio
 from openai import OpenAI
@@ -59,12 +56,18 @@ api_key=os.environ.get("OPENAI_API_KEY")
 
 # Define the FastAPI app
 app = FastAPI(#openapi_tags=tags_metadata,
-              title='Knowledge Research Inc. API',
-              description='Knowledge Research Inc.'
+              title='Real Property Tax Assessment Module',
+              description='Real Property Tax Assessment Module'
               )
 
-# Create database tables
-Base.metadata.create_all(bind=engine)
+@app.on_event("startup")
+async def startup_event():
+    print("Creating tables on startup...")
+    Base.metadata.create_all(bind=engine)
+    print("Tables created successfully on startup.")
+
+
+
 
 # Configure CORS
 
